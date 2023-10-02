@@ -11,12 +11,11 @@ const UnauthorizedError = require('../errors/unauthorizedError');
 const ConflictError = require('../errors/conflictError');
 const userModel = require('../models/user');
 
-const saltRounds = 10;
-const jwtSecret = 'secret';
+const { JWT_SECRET = 'secret' } = process.env;
 
 const updateUserById = (req, res, next) => {
-  const { name, about } = req.body;
-  userModel.findByIdAndUpdate(req.user.id, { name, about }, {
+  const { name, email } = req.body;
+  userModel.findByIdAndUpdate(req.user.id, { name, email }, {
     new: true,
     runValidators: true,
   })
@@ -48,7 +47,7 @@ const createUser = (req, res, next) => {
   const {
     name, about, avatar, email, password,
   } = req.body;
-  bcrypt.hash(password, saltRounds, (error, hash) => userModel.create({
+  bcrypt.hash(password, 10, (error, hash) => userModel.create({
     name, about, avatar, email, password: hash,
   })
     .then(() => res.status(HTTP_STATUS_CREATED).send({
@@ -83,7 +82,7 @@ const login = (req, res, next) => {
         const token = jwt.sign({
           exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 7),
           id: user._id,
-        }, jwtSecret);
+        }, JWT_SECRET);
         return res.status(HTTP_STATUS_OK).cookie('jwt', token).send({ token });
       });
     })
