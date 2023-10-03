@@ -23,6 +23,9 @@ const updateUserById = (req, res, next) => {
       res.send({ data: user });
     })
     .catch((err) => {
+      if (err.code === 11000) {
+        return next(new ConflictError('User with this email already register'));
+      }
       if (err instanceof mongoose.Error.ValidationError) {
         return next(new BadRequestError('Invalid Data'));
       }

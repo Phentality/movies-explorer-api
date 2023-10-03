@@ -1,5 +1,9 @@
-// eslint-disable-next-line no-useless-escape, prefer-regex-literals
-const regularLinkValue = new RegExp('(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?');
+const regularLinkValue = new RegExp('^(https?:\\/\\/)?'
++ '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'
++ '((\\d{1,3}\\.){3}\\d{1,3}))'
++ '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'
++ '(\\?[;&a-z\\d%_.~+=-]*)?'
++ '(\\#[-a-z\\d_]*)?$', 'i');
 
 module.exports = {
   regularLinkValue,

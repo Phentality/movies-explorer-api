@@ -6,6 +6,7 @@ const {
   createUser, login, logout,
 } = require('../controllers/users');
 const auth = require('../middlewares/auth');
+const NotFoundError = require('../errors/notFoundError');
 
 router.post('/signin', celebrate({
   body: Joi.object().keys({
@@ -20,9 +21,10 @@ router.post('/signup', celebrate({
     password: Joi.string().required(),
   }),
 }), createUser);
-router.post('/signout', logout);
 router.use(auth);
+router.post('/signout', logout);
 router.use('/users', userRouter);
 router.use('/movies', movieRouter);
+router.use('*', (req, res, next) => next(new NotFoundError('check API instruction')));
 
 module.exports = router;
