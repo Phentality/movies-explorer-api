@@ -14,7 +14,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb', {
   useNewUrlParser: true,
 });
 
-const { PORT = 3001 } = process.env;
+const { PORT = 3000 } = process.env;
 
 const app = express();
 const allowlist = ['http://localhost:3000', 'https://phental.nomoredomainsrocks.ru', 'http://phental.nomoredomainsrocks.ru'];
