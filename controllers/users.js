@@ -92,7 +92,7 @@ const login = (req, res, next) => {
     .catch((err) => next(err));
 };
 
-const logout = (req, res) => res.status(HTTP_STATUS_ACCEPTED).clearCookie('jwt').send('cookie cleared');
+const logout = (req, res) => res.status(HTTP_STATUS_ACCEPTED).clearCookie('jwt').send(res);
 
 module.exports = {
   updateUserById,
